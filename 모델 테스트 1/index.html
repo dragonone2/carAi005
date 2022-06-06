@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+
+  <meta charset="UTF-8">
+
+ 
+<style>
+html {
+    height: 100%;
+}
+
+body {
+   
+    font-family: sans-serif;
+    height: 100%;
+    margin: 0;
+    
+}
+
+.container {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+}
+
+.image-upload {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.button {
+    
+        
+        margin:auto;
+    
+    justify-content: center;
+    width: 20%;
+    
+    justify-content: center;
+    align-items: center;
+    margin-left: center;
+    background-color:  rgb(26, 93, 138);
+    color: white;
+    border-radius: 40px;
+    padding: 50px;
+    font-size: 4.0em;
+
+}
+
+
+label {
+    cursor: pointer;
+    font-size: 1em;
+}
+
+#chooseFile {
+   visibility: hidden;
+}
+
+.fileContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fileInput {
+    display: flex;
+    align-items: center;
+    border-bottom: solid 2px black;
+    width: 70%;
+    height: 100px;
+
+    font-size: 3em;
+}
+
+#fileName {
+    margin-left: 5px;
+}
+
+.buttonContainer {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 340px;
+    background-color: rgb(26, 93, 138);
+    color: white;
+    border-radius: 40px;
+    padding: 36px;
+    font-size: 3em;
+    
+    cursor: pointer;
+}
+
+.image-show {
+    z-index: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    
+    width: 100%;
+    height: 100%;
+}
+
+.img {
+    position: absolute;
+}
+.reset{
+        font-size: 1.3em;
+        background-color:rgb(113, 161, 132);
+        border-radius: 30px;
+        font-weight: bold;
+        color: white;
+    }
+header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+
+        height: 90px;
+        padding: 1rem;
+        color: white;
+        background: rgb(57, 134, 87);
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 2em;
+    }
+
+    h1,
+    p {
+        margin: 0;
+    }
+
+    main {
+        padding: 1rem;
+        height: 100%;
+    }
+
+    body {
+        background: beige;
+    }
+
+    body,
+    html {
+        height: 100%;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+</style>
+
+  
+  
+  
+  <script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
+
+
+</head>
+
+<body translate="no" >
+  <!DOCTYPE html>
+<html lang="en">
+    <header>
+        <h1>Find a car model</h1>
+        <nav>
+            <button class="reset" onclick="window.open('save.html','저장목록','width=430,height=500,location=no,status=no,scrollbars=yes');">저장 목록&nbsp;&nbsp;</button>
+        </nav>
+    </header>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <br><br><br><br><br>
+    <div class="container">
+        
+        <div class="image-upload" id="image-upload">
+
+            <form method="post" enctype="multipart/form-data">
+                <div class="button">
+                    
+                    <label for="chooseFile">
+                        
+                        📷
+                       
+   
+                    </label>
+                </div>
+                <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+            </form>
+
+            <div class="fileContainer">
+                <div class="fileInput">
+                    <p>파일명: </p>
+                    <p id="fileName"></p>
+                </div>
+               
+                
+            </div>
+            <div>
+                <br><br><br>
+                <div OnClick="location.href ='List.html'" style="cursor:pointer;">                    
+                    <div class="buttonContainer" >
+                        계속
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="image-show" id="image-show"></div>
+       <!--<button class="button2" onClick="window.location.reload()" >다시하기</button>--> 
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
+    
+
+  
+      <script id="rendered-js" >
+//var submit = document.getElementById('submitButton');
+//submit.onclick = "location.href='test.html'"; //Submit 버튼 클릭시 이미지 보여주기
+
+function showImage() {
+  var newImage = document.getElementById('image-show').lastElementChild;
+  newImage.style.visibility = "visible";
+
+  document.getElementById('image-upload').style.visibility = 'hidden';
+
+  document.getElementById('fileName').textContent = null; //기존 파일 이름 지우기
+}
+
+
+function loadFile(input) {
+  var file = input.files[0];
+
+  var name = document.getElementById('fileName');
+  name.textContent = file.name;
+
+  var newImage = document.createElement("img");
+  newImage.setAttribute("class", 'img');
+
+  newImage.src = URL.createObjectURL(file);
+
+  
+  newImage.style.width = "800px";
+  newImage.style.height = "700px";
+  //newImage.style.visibility = "hidden"; //버튼을 누르기 전까지는 이미지 숨기기
+  newImage.style.objectFit = "contain";
+
+  var container = document.getElementById('image-show');
+  container.appendChild(newImage);
+
+  
+  
+};
+//# sourceURL=pen.js
+    </script>
+
+  
+
+  <script src="https://cpwebassets.codepen.io/assets/editor/iframe/iframeRefreshCSS-4793b73c6332f7f14a9b6bba5d5e62748e9d1bd0b5c52d7af6376f3d1c625d7e.js"></script>
+</body>
+
+</html>
+ 
